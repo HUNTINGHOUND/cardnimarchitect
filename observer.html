@@ -176,16 +176,16 @@
         if(game_state == "waiting") {
           p1_name = pdata[0];
           p2_name = pdata[1];
-          init_game_data(Number(pdata[2]));
+          init_game_data(Number(pdata[2]), Number(pdata[3]));
           game_state = "idling";
         } else if(game_state == "idling"){
           recieve_state(Number(pdata[0]), Number(pdata[1]));
         }
       };
 
-      function init_game_data(max_stones) {
+      function init_game_data(max_stones, max_cards) {
         num_stones = max_stones;
-        card_max = 1 + Math.ceil(max_stones / 3);
+        card_max = max_cards;
         document.getElementById("game_msg").textContent = p1_name + "'s turn | " + max_stones + " stones remain";
         init_visuals();
       }

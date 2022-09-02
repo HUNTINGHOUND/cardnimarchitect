@@ -15,10 +15,13 @@ std::string bot_name = "C++ Client";
 // for example: you could gut this struct and add arrays of cards, custom algorithms, and more
 // this is consulted by primary loop in play_game 
 struct Bot {
-	int last_card;
-	Bot(int player_num, int num_stones) {
+	int last_card, max_cards;
+
+	Bot(int player_num, int num_stones, int num_cards) {
 		last_card = 0;
+		max_cards = num_cards;
 	}
+
 	int calculate_move(int num_stones) {
 		return ++last_card;
 	}
@@ -46,16 +49,17 @@ void send_move(int move) {
 
 // this function contains the main game loop
 void play_game() {
-	int player_num, num_stones;
+	int player_num, num_stones, num_cards;
 
 	// read initial data
 	char message[1024];
 	read(socket_id, message, 1024);
 	std::stringstream ss(message);
-	ss >> player_num >> num_stones;
+	ss >> player_num >> num_stones >> num_cards;
+	std::cout << "Player number: " << player_num << " Number of stones: " << num_stones << " Number of Cards " << num_cards << std::endl;
 
 	// create bot
-	Bot b(player_num, num_stones);
+	Bot b(player_num, num_stones, num_cards);
 
 	// the first player can make a move without getting state first
 	// the second needs to make an initial request

@@ -11,6 +11,7 @@ public class Client
     // Track game variables
     private int player_num;
     private int num_stones;
+    private int num_cards;
     private int counter = 1;
   
     // Constructor to put ip address and port
@@ -63,8 +64,9 @@ public class Client
         
         player_num = Integer.parseInt(readyMessage.split(" ")[0]);
         num_stones = Integer.parseInt(readyMessage.split(" ")[1]);
+        num_cards = Integer.parseInt(readyMessage.split(" ")[2]);
 
-        System.out.println(String.format("Initial number of stones: %d", num_stones));
+        System.out.println(String.format("Initial number of stones: %d Initial number of cards: %d", num_stones, num_cards));
 
         while (num_stones > 0) {
         	int state = getstate();
