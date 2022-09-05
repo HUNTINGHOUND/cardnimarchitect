@@ -151,17 +151,25 @@
       socket.onmessage = function(e) {
         if(game_state == "waiting") {
           let pdata = e.data.split(" ");
-          init_game_data(Number(pdata[0]), Number(pdata[1]));
+          // console.log(pdata);
+          init_game_data(Number(pdata[0]), Number(pdata[1]), Number(pdata[2].replace('\n', '')));
         } else if(game_state == "idling"){
           recieve_state(Number(e.data));
         }
       };
 
-      function init_game_data(player_num, max_stones) {
+      function init_game_data(player_num, max_stones, num_cards) {
         num_stones = max_stones;
-        for(let i = 1; i <= 1 + Math.ceil(max_stones / 3); i++) {
+        // console.log("Max stones:" + max_stones);
+
+        // for(let i = 1; i <= 1 + Math.ceil(max_stones / 3); i++) {
+        //   my_cards.push(i);
+        // }
+
+        for(let i = 1; i <= num_cards; i++) {
           my_cards.push(i);
-        }
+        }        
+
         init_visuals(player_num == 1);
         if(player_num == 2) {
           socket.send("getstate");

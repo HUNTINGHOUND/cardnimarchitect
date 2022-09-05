@@ -72,7 +72,7 @@ class Client():
 
             self.sendmove(move)
 
-            time.sleep(0.1)
+            time.sleep(0.1)        
 
         self.socket.close()
 
@@ -84,7 +84,7 @@ class IncrementPlayer(Client):
     '''
     def __init__(self, port=5000):
         super(IncrementPlayer, self).__init__(port)
-        self.i = 0
+        self.i = 1
 
     def generatemove(self, state):
         to_return = self.i
