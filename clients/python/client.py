@@ -19,6 +19,12 @@ class Client():
 
         self.player_num = int(init_info.split(" ")[0])
         self.num_stones = int(init_info.split(" ")[1])
+        self.num_cards = int(init_info.split(" ")[2])
+        
+        print("Player Number: {player_num} Number of stones: {num_stones} Number of cards: {num_cards}"
+              .format(player_num=self.player_num,
+                      num_stones=self.num_stones,
+                      num_cards=self.num_cards))
         
 
     def getstate(self):
