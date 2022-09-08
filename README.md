@@ -13,7 +13,7 @@ To connect to the game server on the cloud, use: ws://ec2-3-86-33-138.compute-1.
 
 To run the server on localhost, from the top level, use the following command:
 
-```php server.php [port] [number of stones]```
+```php server.php [port] [number of stones] [number of cards]```
 
 If you include a ```-o``` on the end, you can connect a websocket observer first as well.
 
@@ -57,7 +57,7 @@ We outline the basic communication steps here for those who want to use other la
 
 3. Wait for the second player to connect and identify with a dummy or websocket message
 
-4. Send all participants their player num (1 or 2), and the number of stones
+4. Send all participants their player num (1 or 2), the number of stones, and the number of cards
 
 5. Wait for messages from the current player (everything except ```getstate``` and ```sendmove [move]``` are ignored)
 
@@ -71,7 +71,7 @@ We outline the basic communication steps here for those who want to use other la
 
 The winner removes the last stone(s).
 
-Each player has a set of cards with numbers 1 through 1 + ceiling(s / 3).
+Each player has a set of cards from 1 to k where k is predetermined
 
 The first player chooses a card and removes exactly that number of stones.
 
@@ -84,6 +84,12 @@ Similarly for the second player."
 Zachary DeStefano : zd2131@nyu.edu
 
 Graham Todd : gdrtodd@gmail.com
+
+Changed by:
+
+Morgan Xu: hx801@nyu.edu
+
+Patrick (Ray) Huang: 
 
 For questions about the code send an email to one or both of the people listed above.
 
