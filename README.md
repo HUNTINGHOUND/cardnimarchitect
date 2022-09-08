@@ -4,6 +4,13 @@ This contains a server using basic sockets and a series of simple clients to pla
 
 ## Running the server
 
+Note (09/07/2022): 
+
+An online html client is setup at: http://ec2-3-86-33-138.compute-1.amazonaws.com/cardnimarchitect/clients/html/client.html
+
+To connect to the game server on the cloud, use: ws://ec2-3-86-33-138.compute-1.amazonaws.com:5000
+
+
 To run the server on localhost, from the top level, use the following command:
 
 ```php server.php [port] [number of stones]```

@@ -11,8 +11,8 @@
 
 	// open, bind, and begin listening on socket
 	$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-	socket_bind($socket, 'localhost', $argv[1]);
-	// socket_bind($socket, '0.0.0.0', $argv[1]);
+	//socket_bind($socket, 'localhost', $argv[1]);
+	socket_bind($socket, '0.0.0.0', $argv[1]);
 	socket_listen($socket, 3);
 
 	$connections;

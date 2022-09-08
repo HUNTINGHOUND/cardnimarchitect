@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Card Nim</title>
+    <meta charset="utf-8" />
     <link rel="shortcut icon" href="favicon.ico"/>
     <style>
       html {
@@ -135,7 +136,8 @@
     <div id = "my_card_collection"></div>
     <p id="game_msg">Connecting.</p>
     <script>
-      let socket = new WebSocket("ws://localhost:5000/");
+      // let socket = new WebSocket("ws://localhost:5000/");
+      let socket = new WebSocket("ws://ec2-3-86-33-138.compute-1.amazonaws.com:5000/");
       let game_state = "connecting"; // connecting, waiting, playing, idling, done
       let num_stones = 0;
       let my_cards = [];
