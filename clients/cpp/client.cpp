@@ -43,7 +43,7 @@ int get_state() {
 }
 
 void send_move(int move) {
-	std::string s = "sendmove " + std::to_string(move);
+	std::string s = "sendmove " + std::to_string(move) + " ";
 	send(socket_id, s.c_str(), s.length(), 0);
 }
 
