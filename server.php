@@ -114,7 +114,7 @@
 	// both players now have 2 minutes each remaining (120 seconds)
 	$time_remaining[1] = 120 * 1000000000;
 	$time_remaining[2] = 120 * 1000000000;
-	$time_start = hrtime(true);
+	$time_start = microtime(true);
 
 	// play game
 	while($num_stones > 0) {
@@ -179,7 +179,7 @@
 			echo("[INFO] Move time remaining: $time_remaining[$current_player] microseconds\n\n");
 		} else if($command_parts[0] == "sendmove" && $cards[$current_player][$command_parts[1]]) {
 			// apply timer
-			$time_remaining[$current_player] -= hrtime(true) - $time_start;
+			$time_remaining[$current_player] -= microtime(true) - $time_start;
 
 			// apply move
 			$num_stones -= $command_parts[1];
@@ -198,14 +198,14 @@
 			if($num_stones > 0) {echo("[INFO] ===[PLAYER $current_player's TURN]===\n");}
 
 			// start timer for next player
-			$time_start = hrtime(true);
+			$time_start = microtime(true);
 		} else {
 			// log command
 			echo("[LOG] Invalid command: \"$command\"\n\n");
 		}
 		// update player time remaining
-		$time_remaining[$current_player] -= hrtime(true) - $time_start;
-		$time_start = hrtime(true);
+		$time_remaining[$current_player] -= microtime(true) - $time_start;
+		$time_start = microtime(true);
 	}
 
 	// send both players either 0 or negative number of stones left
