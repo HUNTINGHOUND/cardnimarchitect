@@ -199,7 +199,8 @@
 
 			// start timer for next player
 			$time_start = microtime(true);
-		} else {
+		} 
+		if($command_parts[0] != "sendmove" && $command_parts[0] != "getmove") {
 			// log command
 			echo("[LOG] Invalid command: \"$command\"\n\n");
 		}
