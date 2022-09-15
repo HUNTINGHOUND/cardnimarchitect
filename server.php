@@ -163,7 +163,7 @@
 		$command_parts = explode(" ", $command);
 
 		// perform actions based on command and log results
-		if($command_parts[0] == "getstate") {
+		if($command_parts[0] == "getstate" || (count($command_parts) >=2 && $command_parts[2] == "getstate")) {
 			// send message
 			send_message($connections[$current_player], "$num_stones\n", $is_websocket[$current_player]);
 			
@@ -177,7 +177,7 @@
 			}
 			echo("\n");
 			echo("[INFO] Move time remaining: $time_remaining[$current_player] microseconds\n\n");
-		} else if($command_parts[0] == "sendmove" && $cards[$current_player][$command_parts[1]]) {
+		} if($command_parts[0] == "sendmove" && $cards[$current_player][$command_parts[1]]) {
 			// apply timer
 			$time_remaining[$current_player] -= microtime(true) - $time_start;
 
