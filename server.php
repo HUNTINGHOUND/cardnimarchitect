@@ -112,23 +112,23 @@
 	if($observed) {send_message($connections[0], "$name[1] $name[2] $num_stones $card_max\n", true);}
 
 	// both players now have 2 minutes each remaining (120 seconds)
-	$time_remaining[1] = 120 * 1000000000;
-	$time_remaining[2] = 120 * 1000000000;
-	$time_start = microtime(true);
+	$time_remaining[1] = 120 * 1000000;
+	$time_remaining[2] = 120 * 1000000;
+	$time_start = microtime(true) * 1000000;
 
 	// play game
 	while($num_stones > 0) {
 		// print status
 		echo("[LOG] Waiting for Player $current_player to send a command\n");
-		$print_time = $time_remaining[$current_player] / 1000000000.0;
-		echo("[INFO] $print_time seconds remaining\n\n");
+		$print_time = $time_remaining[$current_player] / 1000000.0;
+		echo("[INFO] $print_time microseconds remaining\n\n");
 
 		// blocking operation waiting for command
 		// set a timeout on this operation
 		// we will be nice here and round up to account for latency.
 		// Ex. if a player has 73.4 seconds remaining, we will give them 74
 		socket_set_option($connections[$current_player], SOL_SOCKET, SO_RCVTIMEO,
-											array('sec' => intval($time_remaining[$current_player] / 1000000000),
+											array('sec' => intval($time_remaining[$current_player] / 1000000),
 														'usec'=> 0));
 		$command = socket_read($connections[$current_player], 1024);
 
@@ -163,7 +163,7 @@
 		$command_parts = explode(" ", $command);
 
 		// perform actions based on command and log results
-		if($command_parts[0] == "getstate" || (count($command_parts) >=2 && $command_parts[2] == "getstate")) {
+		if($command_parts[0] == "getstate") {
 			// send message
 			send_message($connections[$current_player], "$num_stones\n", $is_websocket[$current_player]);
 			
@@ -177,9 +177,9 @@
 			}
 			echo("\n");
 			echo("[INFO] Move time remaining: $time_remaining[$current_player] microseconds\n\n");
-		} if($command_parts[0] == "sendmove" && $cards[$current_player][$command_parts[1]]) {
+		} else if($command_parts[0] == "sendmove" && $cards[$current_player][$command_parts[1]]) {
 			// apply timer
-			$time_remaining[$current_player] -= microtime(true) - $time_start;
+			$time_remaining[$current_player] -= microtime(true) * 1000000 - $time_start;
 
 			// apply move
 			$num_stones -= $command_parts[1];
@@ -198,15 +198,14 @@
 			if($num_stones > 0) {echo("[INFO] ===[PLAYER $current_player's TURN]===\n");}
 
 			// start timer for next player
-			$time_start = microtime(true);
-		} 
-		if($command_parts[0] != "sendmove" && $command_parts[0] != "getmove") {
+			$time_start = microtime(true) * 1000000;
+		} else {
 			// log command
 			echo("[LOG] Invalid command: \"$command\"\n\n");
 		}
 		// update player time remaining
-		$time_remaining[$current_player] -= microtime(true) - $time_start;
-		$time_start = microtime(true);
+		$time_remaining[$current_player] -= microtime(true) * 1000000 - $time_start;
+		$time_start = microtime(true) * 1000000;
 	}
 
 	// send both players either 0 or negative number of stones left
@@ -225,3 +224,4 @@
 	// close socket
 	socket_close($socket);
 ?>
+
